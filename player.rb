@@ -20,4 +20,12 @@ class Player
     @bankroll -= bet
   end
 
+  def show_player_hand
+    cards.each { |card| print "#{card} " }
+  end
+
+  def show_dealer_hand
+    cards.each { |_card| print '* ' }
+  end
+
 end
