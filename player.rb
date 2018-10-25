@@ -12,4 +12,12 @@ class Player
     cards << card
   end
 
+  def increase_bankroll(bet)
+    @bankroll += bet
+  end
+
+  def decrease_bankroll(bet)
+    @bankroll -= bet
+  end
+
 end
