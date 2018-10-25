@@ -7,4 +7,8 @@ class Card
     @suit = suit
   end
 
+  def show_hand
+    "#{rank}" "#{suit}"
+  end
+
 end
