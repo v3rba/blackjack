@@ -11,7 +11,13 @@ class Deck
   def shuffle
   end
 
-  def deal_card
+  def build_deck
+    @cards = []
+    SUITS.each do |suit|
+      RANKS.each do |rank|
+        @cards << Card.new(rank, suit)
+      end
+    end
   end
 
 end
