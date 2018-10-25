@@ -18,6 +18,7 @@ class Deck
         @cards << Card.new(rank, suit)
       end
     end
+    @cards.shuffle!
   end
 
 end
