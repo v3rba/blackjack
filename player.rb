@@ -1,5 +1,4 @@
 class Player
-
   attr_accessor :cards, :bankroll
 
   def initialize
@@ -26,6 +25,10 @@ class Player
 
   def show_dealer_hand
     cards.each { |_card| print '* ' }
+  end
+
+  def limit_cards?
+    cards.size == 3
   end
 
 end
