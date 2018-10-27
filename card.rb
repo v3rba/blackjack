@@ -1,5 +1,4 @@
 class Card
-
   attr_reader :rank, :suit
 
   def initialize(rank, suit)
@@ -7,8 +6,11 @@ class Card
     @suit = suit
   end
 
-  def show_hand
-    "#{rank}" "#{suit}"
+  def face_card?
+    %w[J Q K A].include?(rank)
   end
 
+  def ace_card?
+    %w[A].include?(rank)
+  end
 end
