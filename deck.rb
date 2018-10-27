@@ -21,5 +21,4 @@ class Deck
   def deal_cards(num = 1)
     num == 1 ? cards.pop : cards.pop(num)
   end
-
 end
