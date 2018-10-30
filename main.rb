@@ -1,5 +1,7 @@
 require './card.rb'
 require './deck.rb'
+require './hand.rb'
+require './game.rb'
 require './player.rb'
 
 puts "Welcome to Blackjack!"
@@ -20,7 +22,7 @@ loop do
   end
   puts "Your bankroll: $#{player.bank}" 
   puts "Dealer has: $#{dealer.bank}"
-  GameSet.new(player, dealer).start_set
+  Game.new(player, dealer).start_set
   puts 'Want to play again? (y - YES, n - NO)'
   command = gets.chomp
   break unless command.downcase == 'y'
