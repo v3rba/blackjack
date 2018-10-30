@@ -1,16 +1,9 @@
-class Dealer
-  attr_reader :name, :bankroll
-
+class Dealer < Player
   def initialize(name="Dealer")
-    @name = name
-    @bankroll = 100
+    super
   end
 
-  def bet(value)
-    @bankroll -= value
-  end
-
-  def add_cash(value)
-    @bankroll += value
+  def take_card?
+    self.points <= 18
   end
 end
