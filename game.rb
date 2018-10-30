@@ -49,13 +49,13 @@ class Game
   def take_card(player)
     player.cards << deck.pull_out
   end
-  
+
   def skip_turn(player)
     puts "#{player.name} pass the turn!"
   end
 
   def open_cards
-    [self.user, self.dealer].each {|p| show_cards(p, true)}
+    [user, dealer].each { |p| show_cards(p, true) }
     winner = check_winner
     take_bank(winner)
     print_round_end(winner)
@@ -63,7 +63,7 @@ class Game
   end
 
   def take_bank(winner)
-    if winner == "Draw!"
+    if winner == 'Draw!'
       user.money += @bank / 2
       dealer.money += @bank / 2
     else
@@ -72,8 +72,8 @@ class Game
   end
 
   def user_select
-    puts "Select action:"
-    puts "(T)ake card, (S)kip turn, (O)pen cards"
+    puts 'Select action:'
+    puts '(T)ake card, (S)kip turn, (O)pen cards'
     choise = gets.chomp.downcase
     case choise
     when 't'
@@ -84,7 +84,7 @@ class Game
       open_cards
     else
       puts 'Type error!'
-    end 
+    end
   end
 
   def show_cards(player, visible = true)
@@ -109,13 +109,13 @@ class Game
   end
 
   def print_round_end(winner)
-    if winner == "Draw!"
+    if winner == 'Draw!'
       puts winner
     else
       puts "#{winner.name} WIN!"
     end
-    [user, dealer].each {|p| print_info(p, :points)}
-    [user, dealer].each {|p| print_info(p, :money)}
+    [user, dealer].each { |p| print_info(p, :points) }
+    [user, dealer].each { |p| print_info(p, :money) }
   end
 
   def round_end?
@@ -132,7 +132,7 @@ class Game
     if (user.points > dealer.points) && user.points <= 21
       user
     elsif user.points == dealer.points
-      "Draw!"
+      'Draw!'
     else
       dealer
     end

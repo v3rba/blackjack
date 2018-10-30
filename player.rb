@@ -28,5 +28,4 @@ class Player
   def limit_cards?
     cards.size == 3
   end
-
 end
