@@ -1,33 +1,26 @@
 class Card
-  attr_reader :rank, :suit, :points
-
-  HIDDEN = '**'.freeze
-
+  attr_reader :rank, :suit
   def initialize(rank, suit)
     @rank = rank
     @suit = suit
-    @points = points
   end
 
-  def face_card?
-    %w[J Q K A].include?(rank)
+  def get_points
+    ranks = %i[k q j]
+    if ranks.include?(rank)
+      10
+    elsif rank == :a
+      [1, 11]
+    else
+      rank.to_i
+    end
   end
 
-  def ace_card?
-    %w[A].include?(rank)
-  end
-
-  def points
-    return 11 if ace_card?
-    return 10 if face_card?
-    @rank
+  def ace?
+    rank == :a
   end
 
   def to_s
-    "#{@rank}#{@suit}"
-  end
-
-  def hidden
-    HIDDEN
+    "#{rank}" "#{suit}"
   end
 end
