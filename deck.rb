@@ -1,22 +1,22 @@
 class Deck
-  SUITS = %w[♠️ ♣️ ♥️ ♦️].freeze
-  RANKS = %w[2 3 4 5 6 7 8 9 10 J Q K A].freeze
+  attr_reader :cards
 
   def initialize
-    @cards = build_deck
-  end
-
-  def self.build_deck
     @cards = []
-    SUITS.each do |suit|
-      RANKS.each do |rank|
+    suits = %w[♠️ ♣️ ♥️ ♦️]
+    ranks = [:a, :k, :q, :j, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    ranks.each do |rank|
+      suits.each do |suit|
         @cards << Card.new(rank, suit)
       end
     end
+  end
+
+  def shuffle!
     @cards.shuffle!
   end
 
-  def take_a_card
-    @cards.pop
+  def pull_out
+    @cards.shift
   end
 end

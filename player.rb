@@ -1,30 +1,28 @@
 class Player
-  attr_accessor :cards, :bankroll
+  attr_accessor :name, :money, :cards
 
-  def initialize
+  def initialize(name)
     @name = name
-    @bankroll = 100
-    @cards = Deck.new
+    @money = 100
+    @cards = []
   end
 
-  def add_card(card)
-    cards << card
+  def points
+    points = 0
+    cards.each do |card|
+      points += if card.ace? && points <= 10
+                  card.get_points.last
+                elsif card.ace?
+                  card.get_points.first
+                else
+                  card.get_points
+      end
+    end
+    points
   end
 
-  def increase_bankroll(bet)
-    @bankroll += bet
-  end
-
-  def decrease_bankroll(bet)
-    @bankroll -= bet
-  end
-
-  def show_player_hand
-    cards.each { |card| print "#{card} " }
-  end
-
-  def show_dealer_hand
-    cards.each { |_card| print '* ' }
+  def to_bet
+    @money -= 10
   end
 
   def limit_cards?
