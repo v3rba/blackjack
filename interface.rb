@@ -1,4 +1,4 @@
-class Interface
+module Interface
   def user_select
     puts 'Select action:'
     puts '(T)ake card, (S)kip turn, (O)pen cards'
