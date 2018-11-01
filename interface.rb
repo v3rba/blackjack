@@ -12,6 +12,7 @@ module Interface
       open_cards
     else
       puts 'Unknown command'
+      user_select
     end
   end
 
@@ -24,6 +25,7 @@ module Interface
       exit
     else
       puts 'Unknown command'
+      start_new_round
     end
   end
 
