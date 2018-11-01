@@ -1,9 +1,10 @@
-require './game.rb'
-require './player.rb'
-require './dealer.rb'
-require './user.rb'
-require './card.rb'
-require './deck.rb'
+require_relative 'player'
+require_relative 'card'
+require_relative 'deck'
+require_relative 'interface'
+require_relative 'user'
+require_relative 'game'
+require_relative 'dealer'
 
 puts 'Welcome to Blackjack!'
 puts "I'm going to be the dealer, and my name is Joe Rogan."
