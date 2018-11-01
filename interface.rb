@@ -2,8 +2,8 @@ module Interface
   def user_select
     puts 'Select action:'
     puts '(T)ake card, (S)kip turn, (O)pen cards'
-    choise = gets.chomp.downcase
-    case choise
+    choice = gets.chomp.downcase
+    case choice
     when 't'
       take_card(user)
     when 's'
@@ -17,11 +17,13 @@ module Interface
 
   def start_new_round
     puts 'Do you want play again? (Y, N)'
-    choise = gets.chomp.downcase
-    if choise == 'y'
+    choice = gets.chomp.downcase
+    if choice == 'y'
       play_round
-    else
+    elsif choice == 'n'
       exit
+    else
+      puts 'Unknown command'
     end
   end
 
