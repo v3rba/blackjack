@@ -61,4 +61,12 @@ module Interface
       dealer
     end
   end
+
+  def has_enought_money?
+    if user.money <= 0
+      puts "#{player.name}, this game is over. You have lost all your money. Good bye."
+    elsif dealer.money <= 0
+      puts "#{player.name}, congratulations! You have won."
+    end
+  end
 end
