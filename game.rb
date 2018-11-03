@@ -1,10 +1,12 @@
 require_relative 'player'
 require_relative 'card'
 require_relative 'deck'
-require_relative 'interface'
+require_relative 'commands'
+require_relative 'checking'
 
 class Game
-  include Interface
+  include Commands
+  include Checking
   attr_accessor :user, :dealer, :deck, :bank
 
   def initialize(user, dealer = Dealer.new)
@@ -14,15 +16,14 @@ class Game
   end
 
   def play_round
-    while has_enough_money?
-      new_round
-      until round_end?
-        user_turn
-        dealer_turn
-      end
-      open_cards
+    new_round
+    until has_enough_money? && round_end?
+      user_turn
+      dealer_turn
     end
+    open_cards
   end
+  
 
   def new_round
     print_info(user, :money)
@@ -77,16 +78,6 @@ class Game
     else
       game_over
       exit
-    end
-  end
-
-  def round_end?
-    if user.limit_cards? && dealer.limit_cards?
-      true
-    elsif user.limit_cards? && !dealer.take_card?
-      true
-    else
-      false
     end
   end
 end
