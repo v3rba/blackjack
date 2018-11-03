@@ -2,6 +2,8 @@ module Checking
     def check_winner
     if (user.points > dealer.points) && user.points <= 21
       user
+    elsif (user.points < dealer.points) && dealer.points > 21
+      user
     elsif user.points == dealer.points
       'Draw!'
     else
