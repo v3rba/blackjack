@@ -17,14 +17,29 @@ module Commands
   end
 
   def start_new_round
-    puts 'Do you want play again? (Y, N)'
-    choise = gets.chomp.downcase
-    if choise == 'y'
-      play_round
-    else
-      exit
+    puts "Do you want to play again? (Y/N)"
+    case gets.chomp.downcase
+    when 'y'
+      if has_enough_money?
+        play_round
+      end
+    when 'n'
+      puts "Bye"
     end
   end
+
+#  def start_new_round
+#    puts 'Do you want play again? (Y, N)'
+#    input = gets.chomp.downcase
+#    case input
+#    when 'y'
+#      until has_enough_money?
+#        play_round
+#    when 'n'
+#      puts 'Thanks for the game. Bye'
+#      abort
+#    end
+#  end
 
   def skip_turn(player)
     puts "#{player.name} pass the turn!"
@@ -34,7 +49,7 @@ module Commands
     puts "#{player.name}'s cards:"
     puts '|*|' * player.cards.size if visible == false
     puts player.cards if visible == true
-    puts '-' * 10
+    puts '-' * 20
   end
 
   def print_info(player, attr)
