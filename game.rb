@@ -25,17 +25,17 @@ class Game
   end
   
 
-#  def new_round
-#    print_info(user, :money)
-#    @deck = Deck.new
-#    @deck.shuffle!
-#    [user, dealer].each do |player|
-#      player.cards = []
-#      player.to_bet
-#      2.times { take_card(player) }
-#    end
-#    @bank = 20
-#  end
+  def new_round
+    print_info(user, :money)
+    @deck = Deck.new
+    @deck.shuffle!
+    [user, dealer].each do |player|
+      player.cards = []
+      player.to_bet
+      2.times { take_card(player) }
+    end
+    @bank = 20
+  end
 
   def user_turn
     show_cards(dealer, false)
