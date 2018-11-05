@@ -17,29 +17,17 @@ module Commands
   end
 
   def start_new_round
-    puts "Do you want to play again? (Y/N)"
-    case gets.chomp.downcase
-    when 'y'
-      if has_enough_money?
+    loop do
+        puts "Do you want to play again? (Y/N)"
+      case gets.chomp.downcase
+      when 'y'
         play_round
+      when 'n'
+        puts "Bye"
       end
-    when 'n'
-      puts "Bye"
+      break if has_enough_money?
     end
   end
-
-#  def start_new_round
-#    puts 'Do you want play again? (Y, N)'
-#    input = gets.chomp.downcase
-#    case input
-#    when 'y'
-#      until has_enough_money?
-#        play_round
-#    when 'n'
-#      puts 'Thanks for the game. Bye'
-#      abort
-#    end
-#  end
 
   def skip_turn(player)
     puts "#{player.name} pass the turn!"
