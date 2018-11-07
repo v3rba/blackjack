@@ -13,16 +13,13 @@ module Commands
     end
   end
 
-  def start
-    loop do
-      puts 'Do you want to play? Press 1 or 2'
-      case gets.to_i
-      when 1
-        play_round
-      when 2
-        p 'bye'
-        break
-      end
+  def start_new_round
+    puts 'Do you want play again? (Y, N)'
+    choise = gets.chomp.downcase
+    if choise == 'y'
+      play_round
+    else
+      exit
     end
   end
 
