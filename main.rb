@@ -7,6 +7,8 @@ require_relative 'user'
 require_relative 'game'
 require_relative 'dealer'
 
+@deck = Deck.new
+@deck.shuffle!
 puts 'Welcome to Blackjack!'
 puts "I'm going to be the dealer, and my name is Joe Rogan."
 puts "If you don't mind me asking, what's your name?"
@@ -15,5 +17,4 @@ puts "Nice to meet you, #{username}! Let's get started."
 user = User.new(username)
 dealer = Dealer.new
 game = Game.new(user, dealer)
-
-game.play_round
+game.start

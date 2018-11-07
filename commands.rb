@@ -10,22 +10,19 @@ module Commands
       skip_turn(user)
     when 'o'
       open_cards
-    else
-      puts 'Unknown command'
-      user_select
     end
   end
 
-  def start_new_round
+  def start
     loop do
-        puts "Do you want to play again? (Y/N)"
-      case gets.chomp.downcase
-      when 'y'
+      puts 'Do you want to play? Press 1 or 2'
+      case gets.to_i
+      when 1
         play_round
-      when 'n'
-        puts "Bye"
+      when 2
+        p 'bye'
+        break
       end
-      break if has_enough_money?
     end
   end
 

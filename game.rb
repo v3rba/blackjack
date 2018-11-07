@@ -17,7 +17,7 @@ class Game
 
   def play_round
     new_round
-    until has_enough_money? && round_end?
+    until round_end?
       user_turn
       dealer_turn
     end
@@ -60,7 +60,6 @@ class Game
     winner = check_winner
     take_bank(winner)
     print_round_end(winner)
-    start_new_round
   end
 
   def take_bank(winner)
