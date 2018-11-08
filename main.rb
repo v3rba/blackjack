@@ -1,3 +1,4 @@
+
 require_relative 'player'
 require_relative 'card'
 require_relative 'deck'
@@ -17,4 +18,4 @@ puts "Nice to meet you, #{username}! Let's get started."
 user = User.new(username)
 dealer = Dealer.new
 game = Game.new(user, dealer)
-game.start
+game.start_round

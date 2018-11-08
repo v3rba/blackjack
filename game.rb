@@ -15,16 +15,6 @@ class Game
     @bank = 0
   end
 
-  def play_round
-    new_round
-    until round_end?
-      user_turn
-      dealer_turn
-    end
-    open_cards
-  end
-  
-
   def new_round
     print_info(user, :money)
     @deck = Deck.new
@@ -40,7 +30,7 @@ class Game
   def user_turn
     show_cards(dealer, false)
     show_cards(user)
-    user_select
+    menu
   end
 
   def dealer_turn
@@ -60,6 +50,7 @@ class Game
     winner = check_winner
     take_bank(winner)
     print_round_end(winner)
+    start_round
   end
 
   def take_bank(winner)

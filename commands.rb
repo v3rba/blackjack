@@ -1,5 +1,5 @@
 module Commands
-  def user_select
+  def menu
     puts 'Select action:'
     puts '(T)ake card, (S)kip turn, (O)pen cards'
     choice = gets.chomp.downcase
@@ -13,15 +13,24 @@ module Commands
     end
   end
 
-  def start_new_round
-    puts 'Do you want play again? (Y, N)'
-    choise = gets.chomp.downcase
-    if choise == 'y'
-      play_round
-    else
-      exit
+  def start_round
+    loop do
+      puts "Wanna play? (Y/N)"
+      case gets.chomp
+      when 'y'
+        new_round
+      until round_end? && has_enough_money?
+        user_turn
+        dealer_turn
+      end
+      open_cards
+      when 'n'
+        puts 'Bye'
+        abort
+      end
     end
   end
+
 
   def skip_turn(player)
     puts "#{player.name} pass the turn!"
@@ -50,7 +59,7 @@ module Commands
 
   def game_over
     if user.money <= 0
-      puts "#{user.name}, this game is over. You have lost all your money. Good bye."
+      puts "#{user.name}, you have lost all your money. Good bye."
     elsif dealer.money <= 0
       puts "#{user.name}, Congratulations! Dealer is out of money. You have won. Good bye"
     end

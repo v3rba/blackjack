@@ -3,7 +3,7 @@ class Player
 
   def initialize(name)
     @name = name
-    @money = 20
+    @money = 100
     @cards = []
   end
 
