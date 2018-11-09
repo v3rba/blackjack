@@ -15,6 +15,24 @@ class Game
     @bank = 0
   end
 
+  def start_round
+    loop do
+      puts 'Wanna play? (Y/N)'
+      case gets.chomp
+      when 'y'
+        new_round
+        until round_end? && enough_money?
+          user_turn
+          dealer_turn
+        end
+        open_cards
+      when 'n'
+        puts 'Bye'
+        abort
+      end
+    end
+  end
+
   def new_round
     print_info(user, :money)
     @deck = Deck.new
@@ -62,7 +80,7 @@ class Game
     end
   end
 
-  def has_enough_money?
+  def enough_money?
     if user.has_money? && dealer.has_money?
       true
     else
@@ -70,4 +88,5 @@ class Game
       exit
     end
   end
+
 end

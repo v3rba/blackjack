@@ -1,5 +1,5 @@
 module Checking
-    def check_winner
+  def check_winner
     if (user.points > dealer.points) && user.points <= 21
       user
     elsif (user.points < dealer.points) && dealer.points > 21
@@ -9,7 +9,7 @@ module Checking
     else
       dealer
     end
-  end
+end
 
   def round_end?
     if user.limit_cards? && dealer.limit_cards?
