@@ -1,35 +1,23 @@
-require_relative 'player'
-require_relative 'card'
-require_relative 'deck'
-require_relative 'commands'
-require_relative 'checking'
-
-class Game
-  include Commands
-  include Checking
-  attr_accessor :user, :dealer, :deck, :bank
-
-  def initialize(user, dealer = Dealer.new)
+class Round
+  def initialize(user, interface)
     @user = user
-    @dealer = dealer
+    @dealer = Dealer.new
     @bank = 0
+    @interface = interface
+    @deck = Deck.new
   end
 
-  def start_round
-    loop do
-      puts 'Wanna play? (Y/N)'
-      case gets.chomp
-      when 'y'
-        new_round
-        until round_end? && enough_money?
-          user_turn
-          dealer_turn
-        end
-        open_cards
-      when 'n'
-        puts 'Bye'
-        abort
-      end
+  def menu
+    puts 'Select action:'
+    puts '(T)ake card, (S)kip turn, (O)pen cards'
+    choice = gets.chomp.downcase
+    case choice
+    when 't'
+      take_card(user)
+    when 's'
+      skip_turn(user)
+    when 'o'
+      open_cards
     end
   end
 
@@ -89,4 +77,25 @@ class Game
     end
   end
 
+  def check_winner
+    if (user.points > dealer.points) && user.points <= 21
+      user
+    elsif (user.points < dealer.points) && dealer.points > 21
+      user
+    elsif user.points == dealer.points
+      'Draw!'
+    else
+      dealer
+    end
+  end
+
+  def round_end?
+    if user.limit_cards? && dealer.limit_cards?
+      true
+    elsif user.limit_cards? && !dealer.take_card?
+      true
+    else
+      false
+    end
+  end
 end
