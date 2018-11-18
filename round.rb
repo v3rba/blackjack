@@ -1,101 +1,113 @@
 class Round
   def initialize(user, interface)
     @user = user
-    @dealer = Dealer.new
-    @bank = 0
     @interface = interface
-    @deck = Deck.new
+    @dealer = Dealer.new
+    @deck_for_game = Deсk.new
+    @bank = Bank.new
   end
 
-  def menu
-    puts 'Select action:'
-    puts '(T)ake card, (S)kip turn, (O)pen cards'
-    choice = gets.chomp.downcase
-    case choice
-    when 't'
-      take_card(user)
-    when 's'
-      skip_turn(user)
-    when 'o'
+  def run
+    @user.reset_points
+    @user.cards.clear
+    @deck_for_game.create_deck
+    @deck_for_game.cards.shuffle!
+    cards_for_players
+    @bank.take_bet(@dealer)
+    @bank.take_bet(@user)
+    cards
+    dealing
+  end
+
+  private
+
+  def cards
+    user_cards
+    @interface.unknown_dealer_cards
+  end
+
+  def dealing
+    if full_hands?
       open_cards
+    else
+      @interface.user_chioce
+      @choice = @interface.choice
+      case @choice.to_i
+      when 1
+        dealer_turn
+      when 2
+        @user.take_card(@deck_for_game)
+        raise 'You can add only one card' if @user.cards.count > 3
+        dealer_turn
+      when 3
+        open_cards
+      else
+        puts 'Choice is wrong. Try again'
+        exit
+      end
     end
-  end
-
-  def new_round
-    print_info(user, :money)
-    @deck = Deck.new
-    @deck.shuffle!
-    [user, dealer].each do |player|
-      player.cards = []
-      player.to_bet
-      2.times { take_card(player) }
-    end
-    @bank = 20
-  end
-
-  def user_turn
-    show_cards(dealer, false)
-    show_cards(user)
-    menu
   end
 
   def dealer_turn
-    if dealer.take_card?
-      take_card(dealer)
-    else
-      skip_turn(dealer)
+    @dealer.take_card(@deck_for_game) if can_add_card?
+    dealing
+  end
+
+  def full_hands?
+    @dealer.cards.count == 3 && @user.cards.count == 3
+  end
+
+  def cards_for_players
+    2.times do
+      @user.take_card(@deck_for_game)
+      @dealer.take_card(@deck_for_game)
     end
   end
 
-  def take_card(player)
-    player.cards << deck.pull_out
+  def can_add_card?
+    @dealer.sum < 17 && @dealer.cards.count != 3
   end
 
   def open_cards
-    [user, dealer].each { |p| show_cards(p, true) }
-    winner = check_winner
-    take_bank(winner)
-    print_round_end(winner)
-    start_round
+    user_cards
+    dealer_cards
+    verify
   end
 
-  def take_bank(winner)
-    if winner == 'Draw!'
-      user.money += @bank / 2
-      dealer.money += @bank / 2
+  def user_cards
+    @interface.user_cards_message(@user)
+    @user.points
+    @interface.user_points_message(@user)
+  end
+
+  def dealer_cards
+    @interface.dealer_cards_message(@dealer)
+    @dealer.points
+    @interface.dealer_points_message(@dealer)
+  end
+
+  def verify
+    if @user.sum > 21 || @user.sum < @dealer.sum && @dealer.sum <= 21
+      lose
+    elsif @user.sum > @dealer.sum || @dealer.sum > 21
+      win
     else
-      winner.money += @bank
+      draw
     end
   end
 
-  def enough_money?
-    if user.has_money? && dealer.has_money?
-      true
-    else
-      game_over
-      exit
-    end
+  def lose
+    @interface.defeat_report
+    @bank.get_money(@dealer)
   end
 
-  def check_winner
-    if (user.points > dealer.points) && user.points <= 21
-      user
-    elsif (user.points < dealer.points) && dealer.points > 21
-      user
-    elsif user.points == dealer.points
-      'Draw!'
-    else
-      dealer
-    end
+  def win
+    @interface.victory_report
+    @bank.get_money(@user)
   end
 
-  def round_end?
-    if user.limit_cards? && dealer.limit_cards?
-      true
-    elsif user.limit_cards? && !dealer.take_card?
-      true
-    else
-      false
-    end
+  def draw
+    @interface.draw_report
+    @bank.split_money(@user, @dealer)
   end
 end
