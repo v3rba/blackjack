@@ -1,22 +1,17 @@
-class Deck
+require_relative 'card'
+
+class Deсk
   attr_reader :cards
 
-  def initialize
+  SUITS = %w[♠️ ♣️ ♥️ ♦️].freeze
+  FACES = [2, 3, 4, 5, 6, 7, 8, 9, 10, :A, :K, :Q, :J].freeze
+
+  def create_deck
     @cards = []
-    suits = %w[♠️ ♣️ ♥️ ♦️]
-    ranks = [:a, :k, :q, :j, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    ranks.each do |rank|
-      suits.each do |suit|
-        @cards << Card.new(rank, suit)
+    SUITS.each do |suit|
+      FACES.each do |face|
+        @cards << Card.new(suit, face)
       end
     end
-  end
-
-  def shuffle!
-    @cards.shuffle!
-  end
-
-  def pull_out
-    @cards.shift
   end
 end
