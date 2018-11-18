@@ -1,35 +1,48 @@
 class Player
-  attr_accessor :name, :money, :cards
+  attr_reader :cards, :name, :sum
+  attr_accessor :cash
 
   def initialize(name)
     @name = name
-    @money = 100
+    @cash = 100
+    @sum = 0
     @cards = []
   end
 
+  def take_card(deck)
+    @cards << deck.cards.shift
+  end
+
   def points
-    points = 0
-    cards.each do |card|
-      points += if card.ace? && points <= 10
-                  card.get_points.last
-                elsif card.ace?
-                  card.get_points.first
-                else
-                  card.get_points
+    @sum = 0
+    @aces = []
+    @pictures = %i[K Q J]
+    @cards.each do |card|
+      if card.face == :A
+        @aces << card
+        @sum += 11
+      elsif @pictures.include?(card.face)
+        @sum += 10
+      else
+        @sum += card.face.to_i
       end
     end
-    points
+    check_aces
   end
 
-  def to_bet
-    @money -= 10
+  def check_aces
+    @aces.each { @sum -= 10 if @sum > 21 }
   end
 
-  def limit_cards?
-    cards.size == 3
+  def take_money(sum)
+    @cash += sum
   end
 
-  def has_money?
-    @money > 0
+  def deduct_money(sum)
+    @cash -= sum
+  end
+
+  def reset_points
+    @sum = 0
   end
 end
